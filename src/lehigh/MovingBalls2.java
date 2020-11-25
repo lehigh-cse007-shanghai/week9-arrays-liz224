@@ -9,20 +9,33 @@ public class MovingBalls2 extends PApplet{
     class Ball{
         int x, y, radius;
         float speedx, speedy, directionx, directiony;
-        float [] color;
+        int [] color;
 
         Ball(){
             radius = (int) random(5,20);
-            x = (int) random(width - radius/2);
-            y = (int) random(width - radius/2);
-            speedx = random(2.0f);
-            speedy = random(2.0f);
-            color = new float[]{random(1.0f), random(1.0f), random(1.0f)};
+            x = (int) random(width - radius);
+            y = (int) random(width - radius);
+            speedx = random(0.8f,1.4f);
+            speedy = random(0.8f,1.4f);
+            color = new int[]{ (int) random(255), (int)random(255), (int)random(255)};
 
         }
 
+        public void move(){
+            fill(color[0], color[1], color[2]);
+                    ellipse(x, y, radius, radius);
+            if(x > (width -radius)|| x < (radius))
+            speedx = - speedx;
+            if(y > (height - radius)|| y < (radius))
+            speedy = - speedy;
+            x += speedx;
+            y += speedy;
+        }
+
     }
-ArrayList<Ball> balls;
+
+    ArrayList<Ball> balls;
+    int numClick = 0;
 
 
 
@@ -38,8 +51,21 @@ ArrayList<Ball> balls;
         background(0);
         fill(255);
         for (Ball ball : balls) {
-            ellipse(ball.x, ball.y, ball.radius, ball.radius);
+           ball.move();
         }
+        textSize(32);
+        fill(255, 255, 255, 100);
+        text("score: " + Integer.toString(numClick), 10, 90);
+    }
+
+    @Override
+    public void mouseClicked(){
+//        for(Ball b: balls)
+            if(Math.abs(mouseX - b.x) <= b.radius && Math.abs(mouseY - b.y) <= b.radius)
+            {
+                numClick += 1;
+                b.radius = 0;
+            }
     }
 
     public static void main(String[] args) {
