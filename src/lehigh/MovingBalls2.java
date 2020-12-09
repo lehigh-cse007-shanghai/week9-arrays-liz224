@@ -60,11 +60,17 @@ public class MovingBalls2 extends PApplet{
 
     @Override
     public void mouseClicked(){
-//        for(Ball b: balls)
+            for(Ball b: balls)
             if(Math.abs(mouseX - b.x) <= b.radius && Math.abs(mouseY - b.y) <= b.radius)
             {
                 numClick += 1;
-                b.radius = 0;
+//              b.radius = 0;
+              b.speedx *=1.5;
+              b.speedy *=1.5;
+
+
+
+
             }
     }
 
